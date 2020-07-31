@@ -44,8 +44,8 @@ Je tiens à adresser mes remerciements les plus sincères à l'administration de
 
 Je tiens également à remercier François Charoy pour son soutient indéfectible, tant professionel que moral qui m'a permis d'accomplir les objectifs de ce stage dans les meilleures conditions possible.\\
 
-Finalement, j'adresse mes remerciements amicaux à Sebastien Da Silva, Christophe Bouthier, Yann Chaudun, Maialen Coterreau et Elise Klein pour leurs
-%Thibault Cholez, Sebastien Da Silva, Christophe Bouthier, Eric Boniface, Olivier Festor, Michele Tartari, Maialen Coterreau Yann Chaudun Elise Klein
+Finalement, j'adresse mes remerciements amicaux à Sebastien Da Silva, Christophe Bouthier, Yann Chaudun, Maialen Coterreau et Elise Klein pour leurs soutiens personnel et la détente qu'ils ont pus m'apporter.
+
 }
 
 \hspace{4cm} -- Alexandre Bourbeillon
@@ -63,7 +63,7 @@ Finalement, j'adresse mes remerciements amicaux à Sebastien Da Silva, Christoph
 
 \chapter{Introduction}
 
-L'avènement du big data et des technologies du cloud a permis l'explosion de la production de données durant les dernières années. La production d'une telle quantité de données ainsi que l'augmentation très rapide de la puissance des machines informatiques a ainsi contribué au dévellopement très important des technologies d'intelligence artificielle. En particulier, l'apprentissage automatisé, avec comme figure de proue les réseaux de neurones profond, est maintenant utilisé dans un grand nombres d'application industrielle comme l'analyse d'images, l'analyse de risque dans l'assurance de prêt (credit scoring) ou encore la production de diagnostics médicaux automatiques.
+L'avènement du big data et des technologies cloud a permis l'explosion de la production de données durant les dernières années. La production d'une telle quantité de données ainsi que l'augmentation très rapide de la puissance des machines informatiques a ainsi contribué au dévellopement très important des technologies d'intelligence artificielle. En particulier, l'apprentissage automatisé, avec comme figure de proue les réseaux de neurones profond, est maintenant utilisé dans un grand nombres d'application industrielle comme l'analyse d'images, l'analyse de risque dans l'assurance de prêt (credit scoring) ou encore la production de diagnostics médicaux automatiques.
 
 Pour entrainer des algorithmes d'intelligence artificielle précis, il est nécessaire d'utiliser de très nombreuses données annotées. Cependant, la production et l'utilisation de telles données pose des problèmes de protection de la vie privée des individus. En effet, certaines données, comme un dossier médical ou un dossier bancaire, peuvent être qualifiés de sensible dans la mesure ou leurs utilisation peut affecter la vie de leur propriétaire. Un exemple connu de ce phénomène est le prix d'une assurance vie qui peu varier en fonction des antécédants médicaux de la personne qui les contractes. Bien que des techniques d'anonymisation des données existes, plusieurs études ont montrés que celle-ci peuvent être facilement contournés en utilisant du recoupement de base de données. La protection de l'anonymat des données des utilisateurs est donc un facteur très important à prendre en compte lorsque l'on construit des algorithmes de big data et d'intelligence artificielle.
 
@@ -101,7 +101,7 @@ Dans le cadre des recherches de l'équipe COAST, nous nous interessons au systè
 
 L'objectif de ce projet de fin d'études est donc la mise en place d'un algorithme distribué permettant l'évaluation de la performance des noeuds d'un système d'apprentissage fédéré en respectant des contraintes de complexité algorithmique et d'implémentation dans un système pair à pair.  
 
-Pour la réalisation e cet objectif, il est dans un premier temps nécessaire de s'interesser à l'influance de la distribution des données sur la variation de performance entre les noeuds. Après quoi il sera necessaire de dévelloper et d'implémenter une metrique permettant l'évaluation de la performance de chaque noeud. Il sera ensuite necessaire de proposer un protocole expérimental permettant d'attester de l'efficacité de la metrique produite et de la comparer au méthodes de l'état de l'art. Enfin, il serait interessant de vérifier que l'algorithme est résistant face à certain schéma d'attaques bizantine.
+Pour la réalisation de cet objectif, il est dans un premier temps nécessaire de s'interesser à l'influance de la distribution des données sur la variation de performance entre les noeuds. Après quoi il sera necessaire de dévelloper et d'implémenter une metrique permettant l'évaluation de la performance de chaque noeud. Il sera ensuite necessaire de proposer un protocole expérimental permettant d'attester de l'efficacité de la metrique produite et de la comparer au méthodes de l'état de l'art. Enfin, il serait interessant de vérifier que l'algorithme est résistant face à certain schéma d'attaques bizantine.
 
 
 
@@ -213,7 +213,7 @@ Par exemple, la mesure de précision $Acc$ revient à calculer le taux de bonne 
 
 Il est important de noter que cette mesure de précision est conditionner par le jeu de données de test.
 
-\subsection{Mesure de la qualité des contributions dans un systèmes distribués}
+\subsection{Mesure de la qualité des contributions dans un systèmes distribués} \label{Shapley}
 
 Le problème de mesurer la valeur de contribution des noeuds dans un système à plusieurs partenaires est un problème important dans la mesure où il permet d'établir des justes récompenses pour les membre du système.
 
@@ -272,14 +272,23 @@ Ceci revient à calculer la moyenne des paramètres optimaux locaux et de l'util
 
 Dans un système d'apprentissage fédéré, on utilise des méthodes de descente de gradient pour calculer les paramêtres locaux du modèle.
 
-Le principe de l'apprentissage fédéré est donc d'utiliser une rêgle d'aggrégation des mises à jour du modèle produite localement par les noeuds.
+Le principe de l'apprentissage fédéré est donc d'utiliser une rêgle d'aggrégation des mises à jour du modèle produite localement par les noeuds. Cette définition a été proposé par les équipes de google (McMahan \& al.) pour résoudre le problème d'entrainement de claviers numérique intelligents sans partager les messages des utilisateurs.
+
+Cette définition a été rafiné par Yin \& al. qui ont proposé de partager l'apprentissage fédéré en deux catégories. La configuration proposé par google, où de nombreux utilisateurs partagent des données de forme identiques (images de même taille) mais avec des distributions différente est appelé \textit{Horizontal Federated Learning}. Ils propose une configuration opposé, dans le cas ou de multiples acteurs partagent des données sur les même individus mais dont le format et le contenu varie entre les acteurs. Il définissent cette méthode comme  \textit{vertical federated learning}. Cette méthode correspondrait à un entrainement entres plusieurs entreprises pour construire un modèle commun. La figure \ref{fig:horizontal_vertical} décrit les différences entre ces deux approches.
+
+\begin{figure}[]
+  \centering
+  \includegraphics[scale=1.65]{figures/horizontalvsvertical.png}
+  \caption{Représentation du federated learning horizontal(droite) et vertical (gauche) [CITER FL c\&application]}
+  \label{fig:horizontal_vertical}
+\end{figure}
 
 \subsubsection{Federated averaging}
 
-Plusieurs technique ont été mise au point pour appliquer l'apprents=issage fédéré. La plus exploré actuellement a été proposé par McMahan \& al. Il s'agit de la méthode de federated Averaging qui consiste à appliquer la minimisation d'erreur pour de multiples itérations de descente de gradient. L'entrainement du modèle est donc completement local.L'algorithme est le suivant:
+Plusieurs technique ont été mise au point pour appliquer l'apprents=issage fédéré. La plus exploré actuellement a été proposé par McMahan \& al. Il s'agit de la méthode de federated Averaging qui consiste à appliquer la minimisation d'erreur pour de multiples itérations de descente de gradient. L'entrainement du modèle est donc completement local. L'algorithme est le suivant:
 
 \begin{algorithm}[h]
-  \caption{QAFLA at round $r$}
+  \caption{Federated averaging at round $r$}
   
  
 \end{algorithm}
@@ -294,23 +303,35 @@ Blanchard \& al. ont démontré que la méthode du federated averaging est très
 
 Pour pallier ceci, plusieurs regles d'aggrégation sécurisés ont été proposés. Blanchard \& al. on définit la rêgle KRUM, qui filtre les noeuds dont le modèle est distant. En effet, un modèle peut-être ecrit comme un vecteur de très grande dimension. On peut donc calculer une distance entre deux modèle, par exemple en utilisant la norme $l_2$. 
 
-Soit $S=(x_1,...,x_n)$ une fédération de $n$ noeuds, soit $f\in[|2,n|]$. KRUM propose une technique d'aggrégation resiliente par rapport à $f$ noeuds attaquants avec la méthode suivante. Pour chaque noeud $x_i$, on détermine les $n-f-1$ noeuds les plus proches et on calcule $s(x_i)=\sum_{x\in S \backslash \{x_i\}} ||x_i - x||_2$. On sélectionne alors le noeud $x \in S$ tel que 
+Soit $S=(x_1,...,x_n)$ une fédération de $n$ noeuds, soit $f\in[|2,n|]$. KRUM propose une technique d'aggrégation resiliente par rapport à $f$ noeuds attaquants avec la méthode suivante. Pour chaque noeud $x_i$, on détermine les $S_i$ l'ensemble des $n-f+1$ noeuds les plus proches et on calcule $s(x_i)=\sum_{x\in S_i} ||x_i - x||_2$. On sélectionne alors le noeud $x_i \in S$ tel que $\forall x \in S \backslash\{x_i\}$, $s(x_i) \leq s(x)$ et son mondèle est sélectionné comme modèle global pour la rounde en cours. L'article met également en place une méthode d'aggrégation plus rapide basée sur KRUM.
 
 En parralèle du devellopement de KRUM, Yin \& al. ont défini une méthode d'aggrégation robuste basé sur l'utilisation de la médiane. Ils définissent dans un premier temps une borne inférieure sur l'erreur produite par la présence d'un nombre $\alpha$ de noeuds Byzantin. Ils définissent ensuite une méthode d'aggrégation sélectionnant les noeuds en utilisant la médiane des modèles locaux.
 
+En s'appyuant sur ces travaux, Munos-Gonzalez \& al. ont proposé la méthode d'\textit{adaptative federated averaging}. La méthode dérive de la version classique du \textit{Federated Averaging} en ajoutant un paramètre de pondération correspondant à la probabilité que le participant apporte une amélioration durant la round $n$. Pour calculer ce paramètre, ils partent du principe suivant: un participant malveillant aura tendance à écarter la moyenne des mises à jour de sa médiane. Notons $\bar\mu^{(r)}$ la moyenne des mises à jour produites localement par les noeuds à la rounde d'entrainement $r$, $\hat{\mu}^{(r)}$ la médiane, et $s_x^{(n)}$ 
+
+Ces travaux permettent de mettre en évidence que l'évaluation de la contribution des participant est lié à la détection des utilisateurs malveillants. En effet, les principes dévellopés dans ces articles permettent d'éliminer des noeuds d'une fédération en leur attribuant un score ou un classement. 
 
 \subsection{Méthode d'évaluation des noeuds}
 
 
 Nous utiliserons le terme de contributivité pour désigner la valeur des contributions de chaque utilisateur dans la fédération. La problématique de savoir à quel point un utilisateur est important dans un système d'apprentissage fédéré à commencé à être étudié récemment dans la littérature.
 
-Wang \& al. ont définis une mesure d'influence des utilisateurs dans une fédération. Le principe consiste à calculer l'écart de prédiction produit par l'absence d'un modèle $n$ dans le modèle produit. Cette valeur sert de mesure de performance pour appliquer une mesure de contributivité utilisant la valeur de Shapley.
+Wang \& al. ont définis une mesure d'influence des utilisateurs dans une fédération. Le principe consiste à calculer l'écart de prédiction produit par l'absence d'un modèle $n$ dans le modèle produit. Cette valeur sert de mesure de performance pour appliquer une mesure de contributivité utilisant la valeur de Shapley. 
 
-Plus récemment Chen \& al. ont introduit l'algorithme FOCUS. Sont objectif est de mesurer la qualité des données étiquetés fournis par les utilisateurs. Soit $M^n$ le modèle produit après l'agrégation à la round $n$, et soit $M_l^n$ le modèle produit localement par le noeud $l$ durant la round $n$. Le principe de l'algorithme est d'évaluer le modèle global $M^n$ sur les données locales de $l$ $D_l$ et d'évaluer le modèle local $M_l^n$ sur un dataset propre au serveur $D_s$ en utilisant un calcul de l'entropie croisé (une petite citation??) comme fonction objectif. L'évaluation du modèle global est appeler $LL_l$ et l'évaluation du modèle local $LS_l$, soit:
+En utilisant encore la valeur de Shapley, Song \& al. (papier I3E 2019) ont définis une méthode de calcul de contribution basé sur le calcul d'un indice de contribution. Pour chaque noeud $x\in S$, on calcule la somme des contributions marginales (cf. \ref{Shapley}) apporté par le modèle $M_x$ produit par $x$ à sous ensemble de modèle produit. Plus formellement, notons $M_{s\subseteq{S}}$ le modèle produit par l'aggrégation des modèles locaux de $s$, $Perf$ une mesure de performance d'un modèle et $D_t$ un jeu de données de test propre au serveur. L'indice de contribution $CI_x$ du noeud x est alors égal à :
+
+\begin{equation}
+  CI_x = \sum_{s\subseteq{S\backslash\{x\}}} \frac{Perf(M_{s\cup \{x\}},D_t) - Perf(M_s,D_t)}{\dbinom{n-1}{|S|}}
+\end{equation}
+
+Ils proposent ensuite deux algorithme permettant de calculer cette méthode de manière approché: dans le cas de l'apprentissage fédéré, calculer les contributions marginales d'un noeud revient à réaliser de multiples entrainements, ce qui est très couteux en temps et en puissance de calcul. Des implémentation de cette méthode ont déja été proposé dans le framework substra (cf \ref{substra}).
+
+
+ En utilisant une approche similaire, Chen \& al. ont proposé l'algorithme FOCUS. Son objectif est de mesurer la qualité des données étiquetés fournis par les utilisateurs. Soit $M^n$ le modèle produit après l'agrégation à la round $n$, et soit $M_l^n$ le modèle produit localement par le noeud $l$ durant la round $n$. Le principe de l'algorithme est d'évaluer le modèle global $M^n$ sur les données locales de $l$ $D_l$ et d'évaluer le modèle local $M_l^n$ sur un dataset propre au serveur $D_t$ en utilisant un calcul de l'entropie croisé (une petite citation??) comme fonction objectif. L'évaluation du modèle global est appeler $LL_l$ et l'évaluation du modèle local $LS_l$, soit:
 
 
 \begin{equation}
-    LS_l = -\sum_{(x,y)\in D_s} y \; log(P(y|x;M_l^n)) 
+    LS_l = -\sum_{(x,y)\in D_t} y \; log(P(y|x;M_l^n)) 
 \end{equation}
 \begin{equation}
     LL_l = -\sum_{(x,y)\in D_l} y \; log(P(y|x;M^n))
@@ -322,7 +343,18 @@ Où $P(y|x;M)$ est la probabilité que le modèle $M$ renvoie le résultat $y$ a
     C_l=1 - \frac{e^{\alpha E_l}}{\sum_i e^{\alpha E_i}}    
 \end{equation}
 
-L'article propose ensuite d'utiliser ces valeurs de crédibilité comme poids dans l'agrégation du modèle à la round suivante. Ce papier laisse cependant les problèmes de distribution des données entre les noeuds de côté.
+L'article propose ensuite d'utiliser ces valeurs de crédibilité comme poids dans l'agrégation du modèle à la round suivante. Ce papier laisse cependant les problèmes de distribution des données entre les noeuds non traités.
+
+Tuor \& al. ont défini une méthode permettant de filtrer les étiquettes de mauvaise qualité proposé par les noeuds. Pour cela, ils supposent que le serveur central possède un jeu de données $D_t$
+
+Le point commun de ces approches est qu'elle se basent sur le  principe que le serveur central (ou un tiers de confiance), possède un dataset qui servira pour l'évaluation. Il s'agit donc de méthode \textit{centralisé} qui suivent le schéma de fonctionnement de la figure \ref{fig:centralised_evaluation}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics{figures/centralised_eval.png}
+  \caption{Workflow de l'évaluation centralisé dans un système d'apprentissage fédéré}
+  \label{fig:centralised_evaluation}
+\end{figure}
 
 
 \subsection{Frameworks d'apprentissage fédéré}
@@ -342,18 +374,74 @@ En parallèle dede TensorFlow Federated, d'autres librairies ont commencés à �
 Le principal concept de cette librairie est celui de tenseur distribué, qui corresnpond à un pointeur vers un tenseur (par exemple une données) présent sur un noeud distant.Cette méthode permet de simuler très simplement l'entrainement de modèle 
 fédéré. 
 
-A l'heure actuelle, ces deux projets sont les plus dévellopés pour la simulation d'algorithme d'apprentissage fédéré. 
+A l'heure actuelle, ces deux projets sont les plus dévellopés pour la simulation d'algorithme d'apprentissage fédéré. D'autres projets ont cependant vue le jour comme LEAF ou encore IBM Machine learning.
 
-\subsubsection{Outils industriels}
+\subsubsection{Outils industriels} \label{substra}
 
-Certaines entités ont commencés plus recemment à dévelloper 
 
-La fondation Substra est une association française dont l'objectif est le dévellopement d'outils responsables d'intelligence artificielle dans le domaine de la santé. Il dévellopement le framework Open Source Substra, qui permet la mise en place simple d'algorithme d'apprentissage fédéré. 
-
+La fondation Substra est une association française dont l'objectif est le dévellopement d'outils responsables d'intelligence artificielle dans le domaine de la santé. Il dévellopement le framework Open Source Substra, qui permet la mise en place simple d'algorithme d'apprentissage fédéré. La plateforme met en places des classes python pour permettre d'implémenter des algorithmes d'apprentissage ou d'ajouter des datasets facilement. La plateforme utilise un système de deployement de conteneurs pour l'exécutions des algorithmes. En parallèle du dévellopement de cette plateforme, une repository dédié à l'expérimentation sur la valeur de contributivité a été mise en place pour permettre l'implémentation et l'expérimentation sur de nouvelles méthodes.
 
 
 
 \cleardoublepage
+
+\section{Objectif et définition}
+
+En s'appuyant sur l'état de l'art existant, on constate que les méthodes d'évaluations de la contributivité des utilisateurs utilise le fait qu'il existe un jeu de données de confiance pour effectuer un test de performance des noeuds. A notre connaissance, il n'existe pour l'heure aucune méthode qui s'affranchisse de ce principe. La problèmatique de ce stage est de savoir si l'évaluation de la contributivité des noeuds est possible de manière distribué. Pour cela, nous proposons de réaliser l'évaluation des modèles locaux sur une partie des noeuds. Pour réaliser ceci, il sera nécessaire de mettre en place un algorithme de sélection des noeuds. Cette partie présente une formalisation de l'approche choisi et les différents problèmes qu'elle présente.
+
+\subsection{Formalisation}
+
+Posons $S=(x_1,...,x_n)$ une fédération, $D_S = \bigcup_{i=1}^n D_{x_1}$ le dataset de l'ensemble de la fédération et $Perf$ une mesure de performance d'un algorithme d'apprentissage. 
+
+L'objectif de l'algorithme sera de déterminer un sous ensemble de noeuds $s \subseteq S$ qui servira pour évaluer la fédération selon une mesure de performance $perf$ préalablement définie. Nous définissons dans cette partie des critères permettant de juger de la pertinance du sous ensemble choisi.
+
+La mesure de performance obéira à la formule suivante. Soit $x$ un noeud de la fédération. On calcule $p_x^{(n)}$ la performance du noeud $x$ par la formule :
+
+\begin{equation}
+  p_x^{(n)} = \sum_{y\in s} \frac{|D_y|}{\sum_{k\in s} |D_k|} perf(M_x,D_y)
+\end{equation}
+
+Cette formule est une moyenne pondéré des performances mesurés localement. Dans un second temps, l'objectif sera d'ajouter à l'algorithme une pondération par la valeur de performance obtenu dans un principe similaire à celui proposé par Munoz Gonzales \& al. .
+
+\subsection{Evaluer la distance entre les noeuds}
+
+L'objectif d'un algorithme d'apprentissage automatique est de produire une loi générale à partir d'une distribution de données. Le modèle produit est donc adapté à la distribution de données utilisé. Dans le cadre du federated leanring, ceci pose un problème dans la mesure ou rien n'assure à priori que les données entre les noeuds sont identiquement distribués. De ce fait, évaluer le modèle d'un noeud par un autre noeud pose problème dans la mesure ou la performance mesuré peut être faussé par l'écart entre les données des deux noeuds. La figure \ref{fig:imbalence} décrit un exemple d'écart de données entre deux noeuds.
+
+Pour répondre à ce problème, il faut donc mettre en place une mesure de distance entre les noeuds. De nombreuses mesures de distance entre distributions existent :
+
+\begin{itemize}
+  \item \textbf{Maximum Mean discrepancy}
+  \item \textbf{Kulber-Leibnitz divergence}
+  \item \textbf{Wasserstein distance}
+\end{itemize}
+
+Dans le cas du federated learning, ces méthodes ne peuvent cependant pas être appliqués car elles utilisent un calcul qui nécessite la mise en commun des deux distributions, et donc un partage des données.  Il faudra donc définir une distance respectant les critères de protection des données et la comparer à celles cité précédemment.
+
+\begin{figure}[]
+  \centering
+  \includegraphics[scale=1.8]{figures/node_divergence.png}
+  \caption{Exemple de différence de distribution (extreme) entre deux noeuds d'une fédération}
+  \label{fig:imbalence}
+\end{figure}
+
+\subsection{Définition d'un critère d'évaluation}
+
+Dans l'objectif d'évaluer la performance d'un noeud en utilisant d'autres noeuds, nous devrons creer un processus de selection des noeuds. Plusieurs sont envisageables
+
+Dans la mesure où nous réalisons des simulations, nous pouvons définir des critères d'évaluation de l'ensemble de noeuds choisis.
+
+Le premier consiste à calculer la similarité entre la distribution de l'ensemble de noeud choisis et la distribution de $S$. En effet, on attend de l'ensemble choisis qu'il suive la même distribution que l'ensemble des noeuds. 
+
+Un second critère consite à comparer le résultat obtenu par la mesure de performance sur l'ensemble du dataset à celle obtenu sur le sous ensemble de noeuds $s$ sélectionné. Dans le cas où ces deux valeurs sont proches, on peut supposer que le sous ensemble choisi est représentatif de tous les noeuds.
+
+
+Il est important de noter que ces critères sont applicables uniquement dans un environnement de simulation car ils impliquent une connaissance de l'ensemble des données. Il pourrait don être intéressant de rechercher un critère d'évaluation du sous ensemble choisi qui soit applicable dans les contraintes de l'apprentissage fédéré.
+
+
+
+
+
+
 
 
 \chapter{Conclusion}
