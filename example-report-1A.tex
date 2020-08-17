@@ -61,21 +61,42 @@ Finalement, j'adresse mes remerciements amicaux à Sebastien Da Silva, Christoph
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-\chapter{Introduction}
+\chapter{Contexte}
 
-L'avènement du big data et des technologies cloud a permis l'explosion de la production de données durant les dernières années. La production d'une telle quantité de données ainsi que l'augmentation très rapide de la puissance des machines informatiques a ainsi contribué au dévellopement très important des technologies d'intelligence artificielle. En particulier, l'apprentissage automatisé, avec comme figure de proue les réseaux de neurones profond, est maintenant utilisé dans un grand nombres d'application industrielle comme l'analyse d'images, l'analyse de risque dans l'assurance de prêt (credit scoring) ou encore la production de diagnostics médicaux automatiques.
+Le dévellopement du big data et des technologies cloud a permis une production de données très imortantes durant la dernière décénie. En paralèlle de cela, la puissance des machines informatiques a beaucoup augmenté. De ce fait, les technologies d'intelligence artificielle, qui ont besoins de beaucoup de données et de puissance de calcul, se sont dévellopés très rapidement. 
 
-Pour entrainer des algorithmes d'intelligence artificielle précis, il est nécessaire d'utiliser de très nombreuses données annotées. Cependant, la production et l'utilisation de telles données pose des problèmes de protection de la vie privée des individus. En effet, certaines données, comme un dossier médical ou un dossier bancaire, peuvent être qualifiés de sensible dans la mesure ou leurs utilisation peut affecter la vie de leur propriétaire. Un exemple connu de ce phénomène est le prix d'une assurance vie qui peu varier en fonction des antécédants médicaux de la personne qui les contractes. Bien que des techniques d'anonymisation des données existes, plusieurs études ont montrés que celle-ci peuvent être facilement contournés en utilisant du recoupement de base de données. La protection de l'anonymat des données des utilisateurs est donc un facteur très important à prendre en compte lorsque l'on construit des algorithmes de big data et d'intelligence artificielle.
+Le principe de ces technologies est de soumettre des données annotés à un algorithme pour qu'il puisse apprendre et ensuite faire des prédictions sur de nouvelles données. Une donnée annoté est une donnée sur laquelle on à déjà réalisé une prédiction. Une fois l'algorithme préparé (ou entrainé) avec de telles données, on peut lui soummetre de nouvelles données pour qu'il réalise des prédictions sur celles-ci. On appelle le résultat de cet entrainement un modèle. L'intelligence artificielle possède aujourd'hui de très nombreux comme la reconnaissances d'images, la production de diagnostics médicaux automatiques ou encore la conduite automatique de véhicules. Il s'agit du sujet de recherche le plus importants des dernières années.
 
-Dans le but d'entrainer des modèles sur des données sensibles sans compromettre leurs anonymats, de nombreuses recherches ont étés menées durant les 10 dernières années. En particulier, il a été proposé  l'utilisation de l'encryption homomorphique, qui permet d'utiliser un modèle d'apprentisage automatique sur une données crypté. Cette méthode permet donc de faire une prédiction sur une données sans que celle-ci soit exploitable par un tiers. Cependant, l'entrainement du modèle d'apprentissage doit être réalisé sur une base de données en clair. De ce fait, cette technique ne rêgle qu'une partie du problème de protection de l'anonymat dans la mesure où les données d'entrainement peuvent potentiellement être utilisés par un tiers.
+Pour entrainer des algorithmes d'intelligence artificielle précis, il est nécessaire d'utiliser de très nombreuses données annotées. Cependant, la production et l'utilisation de telles données pose des problèmes de protection de la vie privé. En effet, certaines données, comme un dossier médical ou un dossier bancaire, sont sensible. Un exemple connu de ce phénomène est le prix d'une assurance vie qui peu varier en fonction des antécédants médicaux de la personne qui la contracte. Bien que des techniques d'anonymisation des données existes, plusieurs études ont montrés que celle-ci peuvent être facilement contournés en recoupant plusieurs sources de données. La protection de l'anonymat des données est donc un facteur important à prendre en compte lorsque l'on construit des algorithmes de big data et d'intelligence artificielle.
 
-Plus récemment, une nouvelle méthode d'apprentissage distribué a été proposé: l'apprentissage fédéré. Le principe de cette méthode est de délocaliser l'entrainement du modèle d'intelligence artificielle à l'endroit où les données sont produite. L'idée de cette méthode est que chaque producteur de données entraine un modèle localement, puis le partage aux autres producteurs. Plus précisément, chaque producteur entraine un modèle localement qui est combiné aux autres modèles en utilisant une rêgle d'aggrégation (par exemple une moyenne pondéré). Avec cette méthode, chaque membre de la fédération conserve ses données mais partage le modèle qu'il produit. Ceci permet donc d'entrainer un modèle sur de très nombreuses données tout en protégeant l'anonymat des données. L'application à l'initiative de cette technologie a été proposé par Google AI et son but était l'entrainement d'un clavier intelligent sans le partage des données de saisie des utilisateur. Depuis, plusieurs projets de framework à l'initiative d'entreprises comme Apple, Google, IBM ou WeBank ont étés lancés et sont encore en cours de développement. 
+Dans le but d'entrainer des modèles sur des données sensibles sans compromettre leurs anonymats, de nombreuses recherches ont étés menées durant les 10 dernières années, par exemple  l'encryption homomorphique ou la confidentialité différentielle. Ces sujets sont encore à l'étude aujourd'hui.
 
-D'autres cas d'usages ont également été proposés. Par exemple l'enterainement d'algorithmes de diagnostic médicaux à partir d'une fédération d'hopitaux. Dans ce cadre, il est intéressant de trouver des méthodes pour motiver les utilisateurs à participer à l'entrainement. Pour cela, il est nécessaire de pouvoir mesurer la performance de chaque memebre de la fédération. Ceci permet en effet d'implémenter des méchanismes de récompense en fonction de la qualité de ce qui est produit par un membre. Une telle méthode peut également servir de méchanisme de contrôle des membres de la fédération. 
+Plus récemment, une nouvelle méthode d'apprentissage distribué a été proposé: l'apprentissage fédéré. Le principe de cette méthode est de délocaliser l'entrainement du modèle d'intelligence artificielle à l'endroit où les données sont produites. Chaque producteur de données entraine un modèle localement, puis le partage aux autres producteurs. Les modèles sont ensuites combinés entre eux par un tier de confiance (par exemple un serveur central) en utilisant une rêgle d'aggrégation (par exemple une moyenne pondéré). Avec cette méthode, chaque membre de la fédération conserve ses données mais partage le modèle qu'il produit. Ceci permet donc d'entrainer un modèle sur de très nombreuses données tout en protégeant l'anonymat des données. Goole AI a proposé cette technologie en 2016 pour entrainer le clavier intelligent d'Android sans compromettre les données de saisies des utilisateurs.
 
-Actuellement, la question de la mesure de la performance des noeuds dans un système d'apprentissage fédéré est encore ouverte dans la recherche, bien que certaines solutions commence à apparaitre. 
+Ce sujet de recherche est très populaire depuis quelques années et de nombreux laboratoires  et entreprise telle que Google, IBM ou WeBank travaille activement à son dévellopement.
 
-L'équipe Coast de l'INRIA Nancy est une équipe de recherche spécialisé dans les systèmes distribués et décentralisés. Elle étudie notamment la mesure de la confiance dans les noeuds de divers systèmes distribués. Le stage de fin d'étude dont ce mémoire fait l'objet s'inscrit dans le cadre de ces recherches. L'objectif de ce stage était en effet d'évaluer la valeur de la contribution dans un système d'apprentisage fédéré.
+Dans le cadre de ces recherches, de nouveaux cas d'usages ont étés proposés.  Par exemple l'enterainement d'algorithmes de diagnostic médicaux à partir d'une fédération d'hopitaux, de vérification de dossiers de prêt par un groupe de banques, ou encore de mesure de la qualité des services web de différentes entreprises par différents préstataires de service cloud. Il s'agit de cas d'applications où des organisations (par exemple des entreprises) collaborent pour entrainer des algorithmes très performant sur un sujet donné.
+
+Par exemple, prenons deux banques $A$ et $B$ qui veulent collaborer pour entrainer un algorithme de mesure de la crédibilité d'un dossier de prêt. Chaque banque possède un jeu de données qu'elle veut conserver (par exemple pour rester en accord avec le rêglement européen sur la protection des données). Pour réaliser l'entrainement, un serveur central $S$ va servir de point de liaison entre ces deux banques. Il leurs partage un modèle d'intelligence artificielle (par exemple un réseau de neuronnes) qui va être entrainé localement par chacune des banques. Après cet entrainement, les banques retournent leur modèle entrainé localement au serveur $S$, qui va les combiner. Ce serveur $S$ partage ensuite le modèle global produit et chaque banque peut l'utiliser pour réaliser des prédictions sur ses prochains dossiers. Chaque membre de la fédération profite donc des données des autres membres en conservant la protection de ces données. La figure \ref{fig:banque_example} résume le principe de fonctionnement de cet algorithme.
+
+\begin{figure}[]
+  \centering
+  \includegraphics[scale=0.8]{figures/banq.png}
+  \caption{Exemple simplifié de protocole de machine learning}
+  \label{fig:banque_example}
+\end{figure}
+
+Dans ce cadre, il est nécessaire de trouver une méthode pour mesurer les performances des participants. Les organisations investissent des moyens financier et veulent s'assurer que chaque membre de la fédération investissent de manière équivalente.  Ce genre de méchanisme a donc deux applications dans la fédération. Il permet premièrement de créer un système de récompense juste en fonction de la performance de chaque noeuds. Il permet également de controler que les utilisateurs participent honnetement.
+
+La question de la mesure de la contribution des participant dans l'apprentissage fédéré est donc un problème important à rêgler pour son application indistrielle. Actuellement, il s'agit encore d'un problème de recherche ouvert, bien que des algorithmes aient été proposés récemment.
+
+
+L'équipe Coast de l'INRIA Nancy est une équipe de recherche spécialisé dans les systèmes distribués et décentralisés. Elle étudie notamment la mesure de la confiance dans les noeuds de divers systèmes distribués. Ils ont par exemple proposés une mesure de la confiance des contributions sur Wikipédia.
+
+L'étude de la valeur des contributions dans un système d'apprentissage fédéré est donc un sujet de recherche particulièrement pertinant pour cette équipe. Un sujet de stage portant sur ce domaine à donc été proposé par François Charoy.
+
+
+
 
 
 \cleardoublepage
@@ -83,28 +104,31 @@ L'équipe Coast de l'INRIA Nancy est une équipe de recherche spécialisé dans 
 
 \chapter{Problématique}
 
-L'apprentissage fédéré représente une nouvelle manière d'envisager l'intelligence artificielle. De ce fait, elle se heurte à de nombreux défi, comme par exemple la sécurité du système face à des attaques visant à influancer le résultat de l'entrainement (attaques Bizantines). Celle-ci permet de diff"rentier un bon contributeur d'un mauvais contributeur. Un problème plus avancer consite à mesurer une valeur de contribution pour chaque noeud du système.
+L'objectif du stage proposé proposé par François Charoy était le suivant: Comment mesurer la valeur de la contribution de chaque participant dans un système d'apprentissage fédéré.
+Si cela est possible, pouvons nous enisager d'implémenter ce genre de méthode dans un système complêtement distribué, c'est à dire sans la présence d'un serveur central dont l'identité est vérifié. 
 
-Il est important de résoudre ce problème pour pouvoir attribuer une juste récompense à chaque participants. En effet, un tel méchanisme est nécessaire pour pouvoir implémenter un système de récompense des utilisateurs du système. Il permettrait de plus aux utilisateurs de vérifier que chacun contribue de manière équivalente au système. Ce genre de méchanimse permet donc d'encourager la participation des utilisateurs du système. 
-
-Il s'agit cependant d'un problème complexe dans la mesure où il est difficile de définir une mesure de la performance d'un modèle simplement dans le cas de l'apprentissage fédéré. En effet, le principe de l'apprentissage automatique est de construire un modèle des rêgles sous-jacentes à un ensemble de données. Pour mesurer la performance d'un modèle, on l'évalue donc simplement sur des données dont la distribution est équvalente au jeu de données qui a servi à l'entrainer.  Dans le cas de l'apprentissage fédéré, les données sont séparés en plusieurs jeu de données. De ce fait, la performance d'un modèle n'a pas la même signification selon le noeud choisi pour l'évaluation. On dit que ces données sont non indépendante et non identiquement distribués (non iid).
-
-
-Il est cependant impossible d'évaluer tous les modèles produit sur tous les noeuds du système. Dans certain cas d'application, un système d'apprentissage fédéré peut contenir plusieurs milliers de noeuds, avec parfois des puissance de calcul très limités. 
-
-Il est donc  nécessaire d'utiliser un processus de selection de noeud de sorte que les noeuds choisi pour l'évaluation respecte la distribution de données de l'ensemble du système. %pas super clair
- 
+Cette approche se heurte à plusieurs difficultés. Dans le cas de l'apprentissage automatique, on évalue la performance d'un modèle sur des données annotés en comparant le résultat attendu au résultat obtenu. Implicitement, on fait l'hypothèse que les données d'entrainement et de test sont bien distribués et indépendantes. Cela se traduit par le fait que chaque étiquête (ou type d'annotations) soit présente en même proportion dans le jeu de test. Dans le cadre de l'apprentissage fédéré, cette hypothèse sur la distribution des données entre deux noeuds n'est pas valable, comme l'illustre la figure \ref{fig:unballanced_data}. En effet, puisque les modèles sont entrainés localement, les jeux de données locaux peuvent présenter des biais, des différences entre eux. De ce fait, une mesure de performance réalisé sur différents partenaires peut-être différente, et un modèle très performant localement n'est pas forcément très performant globalement. Il faudra donc définir une méthode d'évaluation qui permettrent de savoir si le modèle est efficace sur l'ensemble des données de la fédération.
 
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.8]{figures/repart_red_blue.png}
+  \caption{Example de données déséquilibré: les données en bleu représente les données du noeud 1 et les données en rouge celle du noeud 2}
+  \label{fig:unballanced_data}
+\end{figure}
 
-Dans le cadre des recherches de l'équipe COAST, nous nous interessons au système distribués pair à pair en particulier. De ce fait, l'algorithme qui sera mis en place doit donc respecter la contrainte d'être compatible avec un système pair à pair.
+Un autre problème important est de tester l'efficacité d'une telle méthode face à des attaques. En effet, un des problèmes majeurs du federated learning est la robustesse de la fédération faces aux attaques (ou empoissements) du modèle. Le principe est qu'un noeud soumettent un modèle pour influancer
+ le résultat global. On peut prendre l'exemple d'une fédération d'hopital qui veut entrainer un modèle pour le diagnostic des patients. Une firme pharmaceutique peut infiltrer la fédération pour empoisonner le modèle global et faire en sorte de renvoyer ses traitements dans tous les cas. La figure \ref{fig:attack_schema} présente un cas d'attaque du modèle. Les flèches en pointillé représentent les mises à jour du modèle produite localement et la courbe représente la fonction de calcul de l'erreur du modèle. On constate que la flêche rouge, qui représente l'attaquant, veut eloigner le modèle de la direction moyenne des autres participants (représenté par la flêche bleu). Il faudra donc prévoir un protocle de test pour évaluer la résistance de la méthode fournie face à de telles attaques.
 
-L'objectif de ce projet de fin d'études est donc la mise en place d'un algorithme distribué permettant l'évaluation de la performance des noeuds d'un système d'apprentissage fédéré en respectant des contraintes de complexité algorithmique et d'implémentation dans un système pair à pair.  
+\begin{figure}[H]
+  \centering
+  \includegraphics[]{figures/bizantine.png}
+  \caption{Exemple d'empoissonement du modèle par un attaquant externe}
+  \label{fig:attack_schema}
+\end{figure}
 
-Pour la réalisation de cet objectif, il est dans un premier temps nécessaire de s'interesser à l'influance de la distribution des données sur la variation de performance entre les noeuds. Après quoi il sera necessaire de dévelloper et d'implémenter une metrique permettant l'évaluation de la performance de chaque noeud. Il sera ensuite necessaire de proposer un protocole expérimental permettant d'attester de l'efficacité de la metrique produite et de la comparer au méthodes de l'état de l'art. Enfin, il serait interessant de vérifier que l'algorithme est résistant face à certain schéma d'attaques bizantine.
 
-
-
+Dans le but de réaliser ses objectifs, la première partie de ce rapport présente un état de l'art des méthodes existantes pour répondre au problème d'évaluation des noeuds en apprentissage fédéré. Le second chapitre met en place les définitions formèles sur le problèmatique et définis des critères d'évaluation du protocole proposé. On définit ensuite une mesure de distance entre deux noeuds et la comparons aux propriétés de distances connues. Nous présoentons ensuite notre protocole d'évaluation des noeuds. Nous terminons enfin par une évaluation du protocole.
 
 \chapter{Notation et Etat de l'art}
 
@@ -278,7 +302,7 @@ Cette définition a été rafiné par Yin \& al. qui ont proposé de partager l'
 
 \begin{figure}[]
   \centering
-  \includegraphics[scale=1.65]{figures/horizontalvsvertical.png}
+  \includegraphics[scale=1.60]{figures/horizontalvsvertical.png}
   \caption{Représentation du federated learning horizontal(droite) et vertical (gauche) [CITER FL c\&application]}
   \label{fig:horizontal_vertical}
 \end{figure}
@@ -387,7 +411,14 @@ La fondation Substra est une association française dont l'objectif est le déve
 
 \section{Objectif et définition}
 
-En s'appuyant sur l'état de l'art existant, on constate que les méthodes d'évaluations de la contributivité des utilisateurs utilise le fait qu'il existe un jeu de données de confiance pour effectuer un test de performance des noeuds. A notre connaissance, il n'existe pour l'heure aucune méthode qui s'affranchisse de ce principe. La problèmatique de ce stage est de savoir si l'évaluation de la contributivité des noeuds est possible de manière distribué. Pour cela, nous proposons de réaliser l'évaluation des modèles locaux sur une partie des noeuds. Pour réaliser ceci, il sera nécessaire de mettre en place un algorithme de sélection des noeuds. Cette partie présente une formalisation de l'approche choisi et les différents problèmes qu'elle présente.
+En s'appuyant sur l'état de l'art existant, on constate que les méthodes d'évaluations de la contributivité des utilisateurs utilise le fait qu'il existe un jeu de données de confiance pour effectuer un test de performance des noeuds. A notre connaissance, il n'existe pour l'heure aucune méthode qui s'affranchisse de ce principe. 
+
+
+Nous proposons de réaliser l'évaluation des modèles locaux sur une partie des noeuds. En utilisant ce principe, il n'est pas nécessaire que le serveur central possède un jeu de données de référence. Cette méthode est donc compatible avec un algorithme complètement distribué, c'est à dire sans serveur central.
+
+ Il sera nécessaire de mettre en place un algorithme de sélection des noeuds de test. En effet, si chaque noeud doit évaluer tous les autres noeuds, la complexité de l'algorithme devient trop importante. Il faut donc créer une méthode de sélection des noeuds de test qui fasse en sorte que les noeuds choisis soit représentatifs de la fédération.
+ 
+ Cette partie présente une formalisation de l'approche choisi et les différents problèmes qu'elle présente.
 
 \subsection{Formalisation}
 
@@ -403,9 +434,9 @@ La mesure de performance obéira à la formule suivante. Soit $x$ un noeud de la
 
 Cette formule est une moyenne pondéré des performances mesurés localement. Dans un second temps, l'objectif sera d'ajouter à l'algorithme une pondération par la valeur de performance obtenu dans un principe similaire à celui proposé par Munoz Gonzales \& al. .
 
-\subsection{Evaluer la distance entre les noeuds}
+\subsection{Evaluation la distance entre les noeuds}
 
-L'objectif d'un algorithme d'apprentissage automatique est de produire une loi générale à partir d'une distribution de données. Le modèle produit est donc adapté à la distribution de données utilisé. Dans le cadre du federated leanring, ceci pose un problème dans la mesure ou rien n'assure à priori que les données entre les noeuds sont identiquement distribués. De ce fait, évaluer le modèle d'un noeud par un autre noeud pose problème dans la mesure ou la performance mesuré peut être faussé par l'écart entre les données des deux noeuds. La figure \ref{fig:imbalence} décrit un exemple d'écart de données entre deux noeuds.
+L'objectif d'un algorithme d'apprentissage automatique est de produire une loi générale à partir d'une distribution de données. Le modèle produit est donc adapté à la distribution de données utilisé. Dans le cadre du federated leanring, ceci pose un problème dans la mesure ou rien n'assure à priori que les données entre les noeuds sont identiquement distribués. De ce fait, évaluer le modèle d'un participant en utilisant les données d'un autre participant pose problème dans la mesure ou la performance mesuré peut être faussé par l'écart entre les données des deux noeuds. La figure \ref{fig:imbalence} décrit un exemple d'écart de données entre deux noeuds.
 
 Pour répondre à ce problème, il faut donc mettre en place une mesure de distance entre les noeuds. De nombreuses mesures de distance entre distributions existent :
 
@@ -435,13 +466,15 @@ Le premier consiste à calculer la similarité entre la distribution de l'ensemb
 Un second critère consite à comparer le résultat obtenu par la mesure de performance sur l'ensemble du dataset à celle obtenu sur le sous ensemble de noeuds $s$ sélectionné. Dans le cas où ces deux valeurs sont proches, on peut supposer que le sous ensemble choisi est représentatif de tous les noeuds.
 
 
-Il est important de noter que ces critères sont applicables uniquement dans un environnement de simulation car ils impliquent une connaissance de l'ensemble des données. Il pourrait don être intéressant de rechercher un critère d'évaluation du sous ensemble choisi qui soit applicable dans les contraintes de l'apprentissage fédéré.
+Il est important de noter que ces critères sont applicables uniquement dans un environnement de simulation car ils impliquent une connaissance de l'ensemble des données. Il pourrait donc être intéressant de rechercher un critère d'évaluation du sous ensemble choisi qui soit applicable dans les contraintes de l'apprentissage fédéré.
 
 
+\chapter{Evaluation de la distance entre les noeuds}
 
 
+Dans cette partie, nous définissons notre mesure de la distance entre les noeuds. Nous la comparons ensuite a des mesures existante de la distance 
 
-
+\section{définition}
 
 
 \chapter{Conclusion}
